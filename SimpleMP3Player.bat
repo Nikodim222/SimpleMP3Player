@@ -9,4 +9,5 @@ Set PATH=%JAVA_HOME%\bin;%PATH%
 
 cd /D "%~dp0"
 
-java -classpath %PATH_TO_FX% --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml,javafx.media --add-exports java.base/jdk.internal.misc=ALL-UNNAMED -jar ./SimpleMP3Player.jar
+start "Simple MP3 Player" /D "%~dp0" /MIN /NORMAL javaw -classpath %PATH_TO_FX% --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml,javafx.media --add-exports java.base/jdk.internal.misc=ALL-UNNAMED -jar ./SimpleMP3Player.jar
+rem java -classpath %PATH_TO_FX% --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml,javafx.media --add-exports java.base/jdk.internal.misc=ALL-UNNAMED -jar ./SimpleMP3Player.jar

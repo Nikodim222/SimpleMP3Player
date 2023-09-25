@@ -14,7 +14,6 @@
 package main;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -37,15 +36,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import music.MP3Playback;
+// import com.dustinredmond.fxtrayicon.FXTrayIcon;
 
 public class startIt extends Application {
     static File selectedFile;
     static MP3Playback player;
 
     static final double sizeWidth = 250, sizeHeight = 180;
+    static final String appIconResourceFile = "/resources/icon.png";
 
 	@Override
 	public void start(Stage primaryStage) {
+	    final startIt objThis = new startIt();
+
 	    Button button1 = new Button("Open...");
 		button1.setOnAction((event) -> {
 		    selectedFile = null;
@@ -100,7 +103,8 @@ public class startIt extends Application {
 		topStackPane.setPrefSize(sizeWidth - 50, sizeHeight);
 		bottomStackPane.setPrefSize(sizeWidth - 50, sizeHeight);
 		VBox vbox = new VBox(topStackPane, new Separator(Orientation.HORIZONTAL), bottomStackPane);
-		BackgroundImage myBI = new BackgroundImage(new Image(Paths.get("note.png").toUri().toString(), sizeWidth, sizeHeight, false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		BackgroundImage myBI = new BackgroundImage(new Image(objThis.getClass().getResourceAsStream("/resources/note.png"), sizeWidth, sizeHeight, false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		// BackgroundImage myBI = new BackgroundImage(new Image(Paths.get("note.png").toUri().toString(), sizeWidth, sizeHeight, false,true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		vbox.setBackground(new Background(myBI));
 
 		Scene scene = new Scene(vbox);
@@ -112,7 +116,12 @@ public class startIt extends Application {
 		primaryStage.setTitle("Simple MP3 Player"); // заголовок окна
 		primaryStage.setWidth(sizeWidth);
 		primaryStage.setHeight(sizeHeight);
-		// primaryStage.getIcons().add(new Image("file:doge.png")); // https://stackoverflow.com/questions/26039593/icon-set-for-javafx-application-is-visible-in-windows-but-not-in-ubuntu
+		primaryStage.getIcons().add(new Image(objThis.getClass().getResourceAsStream(appIconResourceFile))); // https://stackoverflow.com/questions/26039593/icon-set-for-javafx-application-is-visible-in-windows-but-not-in-ubuntu
+		// if (FXTrayIcon.isSupported()) {
+		//     FXTrayIcon icon = new FXTrayIcon(primaryStage, objThis.getClass().getResource(appIconResourceFile));
+		//     icon.addExitItem(true);
+		//     icon.show();
+		// }
 		primaryStage.setOnCloseRequest((event) -> { // обработчик выхода из программы
 			Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?"); // Cancel, OK
 			a.showAndWait().ifPresent(response -> {
